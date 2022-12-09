@@ -6,24 +6,22 @@ import { pipeline } from "stream";
 
 import fastifyEnv from "@fastify/env";
 
+
+
 const schema = {
   type: 'object',
-  required: [ 'CLOUDINARY_URL' ],
+  required: ['CLOUDINARY_URL', ],
   properties: {
     CLOUDINARY_URL: {
-      type: 'string',
-      default: 'Hello, World'
+      type: 'string'
     }
   }
 }
-// or, pass config options avalible on dotenv module
 const options = {
-  confKey: 'config',
   dotenv: true,
   schema: schema,
   data: process.env
 }
-
 
 const pump = util.promisify(pipeline);
 
@@ -35,7 +33,7 @@ export const app = Fastify({
 app.register(fastifyEnv, options)
   .ready((err) => {
     if (err) console.error(err)
-    console.log(app.config) 
+    console.log("process.env",app.config) 
 })
 
 app.register(multipart);
