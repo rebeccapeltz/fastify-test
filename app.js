@@ -41,8 +41,21 @@ app.register(multipart);
 import * as Cloudinary from 'cloudinary'
 
 const credentials = Cloudinary.v2.config({ secure: "true" });
-console.log(credentials.cloud_name);
-console.log(credentials.api_key);
+console.log(credentials)
+console.log('cloud_name',credentials.cloud_name);
+console.log('api_key',credentials.api_key);
+
+app.get("/resources", async function(req, reply){
+  Cloudinary.v2.api.resources()
+  .then(result => {
+    console.log('success!');
+    console.log(result);
+  })
+  .catch(error => {
+    console.log('error!');
+    console.log(error);
+  });
+} )
 
 app.post("/upload", async function (req, reply) {
   const parts = req.parts();
